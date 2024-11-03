@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>React Calculator App</title>
+    <script src="https://unpkg.com/react/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState } = React;
+
+        function Calculator() {
+            const [input, setInput] = useState("");
+
+            const handleClick = (value) => {
+                setInput(input + value);
+            };
+
+            const handleClear = () => {
+                setInput("");
+            };
+
+            const handleBackspace = () => {
+                setInput(input.slice(0, -1));
+            };
+
+            const handleCalculate = () => {
+                try {
+                    setInput(eval(input).toString());
+                } catch (error) {
+                    setInput("Error");
+                }
+            };
+
+            return (
+                <div className="bg-white p-6 rounded-lg shadow-lg w-80">
+                    <div className="mb-4">
+                        <input
+                            type="text"
+                            value={input}
+                            readOnly
+                            className="w-full p-2 text-right text-2xl border border-gray-300 rounded"
+                        />
+                    </div>
+                    <div className="grid grid-cols-4 gap-2">
+                        <button onClick={handleClear} className="p-4 bg-red-500 text-white rounded">C</button>
+                        <button onClick={handleBackspace} className="p-4 bg-yellow-500 text-white rounded">←</button>
+                        <button onClick={() => handleClick('%')} className="p-4 bg-gray-300 rounded">%</button>
+                        <button onClick={() => handleClick('/')} className="p-4 bg-gray-300 rounded">/</button>
+
+                        <button onClick={() => handleClick('7')} className="p-4 bg-gray-100 rounded">7</button>
+                        <button onClick={() => handleClick('8')} className="p-4 bg-gray-100 rounded">8</button>
+                        <button onClick={() => handleClick('9')} className="p-4 bg-gray-100 rounded">9</button>
+                        <button onClick={() => handleClick('*')} className="p-4 bg-gray-300 rounded">*</button>
+
+                        <button onClick={() => handleClick('4')} className="p-4 bg-gray-100 rounded">4</button>
+                        <button onClick={() => handleClick('5')} className="p-4 bg-gray-100 rounded">5</button>
+                        <button onClick={() => handleClick('6')} className="p-4 bg-gray-100 rounded">6</button>
+                        <button onClick={() => handleClick('-')} className="p-4 bg-gray-300 rounded">-</button>
+
+                        <button onClick={() => handleClick('1')} className="p-4 bg-gray-100 rounded">1</button>
+                        <button onClick={() => handleClick('2')} className="p-4 bg-gray-100 rounded">2</button>
+                        <button onClick={() => handleClick('3')} className="p-4 bg-gray-100 rounded">3</button>
+                        <button onClick={() => handleClick('+')} className="p-4 bg-gray-300 rounded">+</button>
+
+                        <button onClick={() => handleClick('0')} className="col-span-2 p-4 bg-gray-100 rounded">0</button>
+                        <button onClick={() => handleClick('.')} className="p-4 bg-gray-100 rounded">.</button>
+                        <button onClick={handleCalculate} className="p-4 bg-green-500 text-white rounded">=</button>
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<Calculator />, document.getElementById('root'));
+    </script>
+</body>
+</html>
